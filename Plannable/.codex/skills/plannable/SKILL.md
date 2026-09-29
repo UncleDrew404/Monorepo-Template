@@ -1,0 +1,86 @@
+---
+name: plannable
+description: Create and execute scenario-driven implementation plans with MASTER_PLAN.md, one PlannablePlan part at a time, and evidence-gated completion. Use for plannable create, run-next, status, verify, evidence, complete, compress, or expand.
+---
+
+# Plannable
+
+Use this skill when a user asks to create, run, inspect, or verify a Plannable plan.
+
+Plannable is a command-driven planning skill and CLI for AI coding agents. Humans read `MASTER_PLAN.md`; agents read one compressed `plans/PART*_PLAN.ai.md` file at a time.
+
+The compressed format is **PlannablePlan**. Do not call it PlanPack.
+
+All `.ai.md` files must start with:
+
+```txt
+@PlannablePlan v0.1
+```
+
+The CLI is a separate prerequisite. Run it in the target project, not the skill folder. If `plannable` is not on PATH, use the project’s `node_modules/.bin/plannable` with the same arguments. If neither exists, report the missing CLI; do not silently fetch a package.
+
+## Codex Command Style
+
+```txt
+$plannable create a CRM
+$plannable run-next
+$plannable status
+$plannable verify
+```
+
+## Behavior
+
+- For `$plannable create ...`, run the equivalent terminal command `plannable create "..."`
+- Do not require `plannable init` before `plannable create`.
+- For `$plannable run-next`, read only the next pending `.ai.md` part.
+- Always read `MASTER_PLAN.md` first.
+- Never load all part files unless the user explicitly asks.
+- Implement only the current part outcome.
+- Do not edit unrelated files.
+- Stop on stop conditions in the active part.
+- Run listed verification commands where possible.
+- Add evidence to `PLAN_EVIDENCE.md` before marking completion.
+- Update `PLAN_STATE.md` and `MASTER_PLAN.md` only after evidence exists.
+- Run `plannable verify` before reporting completion.
+
+## Enrich the Draft (Important)
+
+`plannable create` writes a deterministic first draft. Scenario hints exist for common domains (CRM, TODO, restaurant, billing, mobile, API); everything else gets generic scaffold wording. Before implementing:
+
+1. Read `MASTER_PLAN.md` and replace generic scenarios with product-specific ones the user actually described. Preserve any `CTX` request and user exclusions; revise conflicting scenario hints.
+2. Enrich one part at a time: make `G` the user goal, `T` concrete actions, and `AC` observable results (include a failure case). Keep only relevant stack, conventions, and dependency facts in `CTX`; replace guesses in `F` and `V` with actual paths and checks.
+3. Keep the `@PlannablePlan v0.1` structure intact, then run `plannable verify` — it warns on generic draft wording until the plan is enriched.
+
+## Routine Safeguards
+
+During enrichment, use [the bundled guidance index](references/guidance.md) and load only applicable module references. The agent owns routine technical protection; ask owners only unresolved product choices after inspecting known context. Do not infer features from a name or add accounts/payments the user excluded.
+
+Before coding the active part, include applicable safeguards in C/T/AC/V with a matching CTX basis. Refresh them when scope changes; keep unresolved decisions in CTX/S. Use real checks and distinguish planned, implemented, passed and unavailable. Do not claim that verify/complete audits or certifies application security.
+
+## CTX: Compressed Phase Context
+
+Every part file carries a `CTX:` block so one part is enough context: the product goal, what prior parts delivered, and what the next part covers. Trust `CTX` instead of loading other part files. Reuse part content printed by `run-next`; do not reread it unless changed. Keep wording short; preserve commands, paths, constraints, and acceptance detail.
+
+## State Is Generated
+
+`MASTER_PLAN.md` checkboxes and `PLAN_EVIDENCE.md` entries are the source of truth. `PLAN_STATE.md` is generated from them by `plannable evidence`, `plannable complete`, and `plannable repair`. Do not hand-edit `PLAN_STATE.md`; if it drifts, run `plannable repair`.
+
+## Examples
+
+```txt
+$plannable create a CRM
+$plannable create an inventory management app
+$plannable run-next
+$plannable evidence PART-001 "Implemented and verified the active part" --artifact "npm test"
+$plannable complete PART-001
+plannable create "CRM"
+plannable create "SaaS billing dashboard"
+plannable run-next
+plannable doctor
+plannable doctor --json
+plannable repair
+```
+
+## Evidence
+
+Evidence should include changed files and verification results such as tests, build output, screenshots, or manual QA notes.
