@@ -77,13 +77,15 @@ Common routes:
 
 ## Agent Report Format
 
-Whenever an agent is selected or newly created, report it with this exact column order:
+Whenever an agent is selected or newly created, report it immediately with this exact column order and then continue the assigned work. Do not pause for acknowledgement solely because an agent was created or assigned.
 
 | Agents | Agent Name | Tasks Do |
 |---|---|---|
-| Active | `example-agent` | One concrete assignment |
+| One Piece Character | `example-agent` | One concrete assignment |
 
 Use one row per agent. Put the workflow category in `Agents`, the definition name in `Agent Name`, and the active-part assignment in `Tasks Do`. Do not invent a model, effort level, or completed task that the runtime did not expose or perform.
+
+Do not automatically delete, archive, terminate, or otherwise remove created agents, subagents, their threads, worktrees, branches, or review artifacts. Keep them available so the user can review the code and plan. Cleanup or archiving requires an explicit user request, and completion of a task is not authorization to remove them.
 
 ## Engineering Guardrails
 
