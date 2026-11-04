@@ -53,15 +53,15 @@ For `senior-frontend`, `senior-backend`, and `code-reviewer`, the `scripts/` and
 
 ## Agent Workflows
 
-| Agents | Agent Name | Tasks Do |
-|---|---|---|
-| Planning and coordination | `context-manager` | Captures decisions, prepares concise briefs, maintains context across a long plan, and reports drift or missing information |
-| System architecture | `backend-architect` | Chooses API paradigms, service boundaries, data consistency, observability, and security architecture; produces design artifacts rather than implementation code |
-| Data architecture | `database-architect` | Designs schemas, indexes, migrations, storage choices, and scaling plans; produces DDL or migration plans rather than application code |
-| Frontend delivery | `frontend-developer` | Implements and tests frontend components, state, responsive behavior, and accessibility using the project's existing stack |
-| Design review | `ui-ux-designer` | Reviews visual hierarchy, usability, responsive behavior, and accessibility with research-backed recommendations; reports findings and does not edit code |
-| Debugging | `debugger` | Reproduces failures, ranks hypotheses, isolates root causes, applies the smallest fix, and adds a regression test when appropriate |
-| Quality review | `code-reviewer` | Reviews changed files for correctness, security, performance, maintainability, and test coverage; issues a merge recommendation |
+| Agent Name | Agents | Effort | Tasks Do |
+|---|---|---|---|
+| Nico Robin | `context-manager` | High | Captures decisions, prepares concise briefs, maintains context across a long plan, and reports drift or missing information |
+| Luffy | `backend-architect` | Ultra | Chooses API paradigms, service boundaries, data consistency, observability, and security architecture; produces design artifacts rather than implementation code |
+| Chopper| `database-architect` | Ultra | Designs schemas, indexes, migrations, storage choices, and scaling plans; produces DDL or migration plans rather than application code |
+| Zoro | `frontend-developer` | Ultra | Implements and tests frontend components, state, responsive behavior, and accessibility using the project's existing stack |
+| Sanji | `ui-ux-designer` | Ultra | Reviews visual hierarchy, usability, responsive behavior, and accessibility with research-backed recommendations; reports findings and does not edit code |
+| Nami | `debugger` | High | Reproduces failures, ranks hypotheses, isolates root causes, applies the smallest fix, and adds a regression test when appropriate |
+| Franky | `code-reviewer` | High | Reviews changed files for correctness, security, performance, maintainability, and test coverage; issues a merge recommendation |
 
 The main coordinating thread owns the plan, dispatches one primary specialist, checks the result, runs verification, and records evidence. If the runtime exposes subagents, pass the brief to the named definition. If it does not, adopt that definition as the working role and state the selection in the report. Never simulate an agent's work or attribute edits to an agent that was not used.
 
@@ -79,9 +79,9 @@ Common routes:
 
 Whenever an agent is selected or newly created, report it immediately with this exact column order and then continue the assigned work. Do not pause for acknowledgement solely because an agent was created or assigned.
 
-| Agents | Agent Name | Tasks Do |
-|---|---|---|
-| One Piece Character | `example-agent` | One concrete assignment |
+| Agents | Agent Name | Effort | Tasks Do |
+|---|---|---|---|
+| One Piece Character | `example-agent` | Ultra | One concrete assignment |
 
 Use one row per agent. Put the workflow category in `Agents`, the definition name in `Agent Name`, and the active-part assignment in `Tasks Do`. Do not invent a model, effort level, or completed task that the runtime did not expose or perform.
 
