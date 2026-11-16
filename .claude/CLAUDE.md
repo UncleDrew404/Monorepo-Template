@@ -8,7 +8,7 @@ This file is the canonical operating guide for AI agents working in this reposit
 2. For feature work, bug fixes, refactors, or other multi-step code changes, use Plannable before implementation.
 3. Read `MASTER_PLAN.md`, then run `plannable run-next` and load only the returned `plans/PART*_PLAN.ai.md` file.
 4. Read every relevant skill's `SKILL.md` before using that skill. Load only the supporting references needed for the active task.
-5. Select one primary agent from the table below and give it a self-contained brief.
+5. Generate other tabs for subagent from the table below and give it a self-contained brief.
 6. Implement only the active part's outcome. Do not edit unrelated files.
 7. Run the listed verification, record evidence, mark the part complete, and run `plannable verify`.
 8. Stop after reporting the completed part. Wait for another explicit `run-next` before starting another part.
@@ -53,15 +53,15 @@ For `senior-frontend`, `senior-backend`, and `code-reviewer`, the `scripts/` and
 
 ## Agent Workflows
 
-| Agent Name | Agents | Effort | Tasks Do |
+| Agent Name | Subagent | Model/Effort | Tasks Do |
 |---|---|---|---|
-| Nico Robin | `context-manager` | High | Captures decisions, prepares concise briefs, maintains context across a long plan, and reports drift or missing information |
-| Luffy | `backend-architect` | Ultra | Chooses API paradigms, service boundaries, data consistency, observability, and security architecture; produces design artifacts rather than implementation code |
-| Chopper| `database-architect` | Ultra | Designs schemas, indexes, migrations, storage choices, and scaling plans; produces DDL or migration plans rather than application code |
-| Zoro | `frontend-developer` | Ultra | Implements and tests frontend components, state, responsive behavior, and accessibility using the project's existing stack |
-| Sanji | `ui-ux-designer` | Ultra | Reviews visual hierarchy, usability, responsive behavior, and accessibility with research-backed recommendations; reports findings and does not edit code |
-| Nami | `debugger` | High | Reproduces failures, ranks hypotheses, isolates root causes, applies the smallest fix, and adds a regression test when appropriate |
-| Franky | `code-reviewer` | High | Reviews changed files for correctness, security, performance, maintainability, and test coverage; issues a merge recommendation |
+| Nico Robin | `context-manager` | Opus 5.5/Low | Captures decisions, prepares concise briefs, maintains context across a long plan, and reports drift or missing information |
+| Luffy | `backend-architect` | Opus 5.5/Medium | Chooses API paradigms, service boundaries, data consistency, observability, and security architecture; produces design artifacts rather than implementation code |
+| Chopper| `database-architect` | Opus 5.5/Medium | Designs schemas, indexes, migrations, storage choices, and scaling plans; produces DDL or migration plans rather than application code |
+| Zoro | `frontend-developer` | Opus 5.5/Medium | Implements and tests frontend components, state, responsive behavior, and accessibility using the project's existing stack |
+| Sanji | `ui-ux-designer` | Opus 5.5/Medium | Reviews visual hierarchy, usability, responsive behavior, and accessibility with research-backed recommendations; reports findings and does not edit code |
+| Nami | `debugger` | Opus 5.5/Medium | Reproduces failures, ranks hypotheses, isolates root causes, applies the smallest fix, and adds a regression test when appropriate |
+| Franky | `code-reviewer` | Opus 5.5/Medium | Reviews changed files for correctness, security, performance, maintainability, and test coverage; issues a merge recommendation |
 
 The main coordinating thread owns the plan, dispatches one primary specialist, checks the result, runs verification, and records evidence. If the runtime exposes subagents, pass the brief to the named definition. If it does not, adopt that definition as the working role and state the selection in the report. Never simulate an agent's work or attribute edits to an agent that was not used.
 
@@ -79,9 +79,9 @@ Common routes:
 
 Whenever an agent is selected or newly created, report it immediately with this exact column order and then continue the assigned work. Do not pause for acknowledgement solely because an agent was created or assigned.
 
-| Agents | Agent Name | Effort | Tasks Do |
+| Agent Name | Subagent | Model/Effort | Tasks Do |
 |---|---|---|---|
-| One Piece Character | `example-agent` | Ultra | One concrete assignment |
+| One Piece Character | `example-agent` | example/example | One concrete assignment |
 
 Use one row per agent. Put the workflow category in `Agents`, the definition name in `Agent Name`, and the active-part assignment in `Tasks Do`. Do not invent a model, effort level, or completed task that the runtime did not expose or perform.
 
