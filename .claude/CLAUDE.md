@@ -46,10 +46,13 @@ When a skill applies, open its `SKILL.md` from the path shown before acting. Do 
 | `senior-backend` | `.claude/skills/senior-backend/SKILL.md` | API design, backend business logic, authentication, database access, or backend performance work | Read the relevant file under `references/`; inspect a helper script before running it |
 | `mobile-design` | `.claude/skills/mobile-design/SKILL.md` | iOS, Android, React Native, Flutter, or other mobile interface work | Read the required universal references and the applicable platform file, then complete the skill's pre-code checkpoint |
 | `code-reviewer` | `.claude/skills/code-reviewer/SKILL.md` | Reviewing a diff, pull request, or risky change | Read the checklist, standards, and anti-pattern references that apply; report findings with severity, risk, and fix |
+| `dashboard-design` | `.claude/skills/dashboard-design/SKILL.md` | Building, redesigning, or critiquing analytics, metrics, admin, stats, or other data-heavy dashboards for web or SwiftUI | Define the screen's single question, its 3–6 numbers, the problem rules, and a fixture with expected totals; read the relevant `references/` files; run the QA pass with known totals, wordless and salience checks, and screenshots |
 
 For `mobile-design`, the required universal references are `mobile-design-thinking.md`, `touch-psychology.md`, `mobile-performance.md`, `mobile-backend.md`, `mobile-testing.md`, and `mobile-debugging.md`. Read `platform-ios.md` for iOS, `platform-android.md` for Android, or both for cross-platform work. Do not write mobile UI code until the skill's checkpoint is complete.
 
 For `senior-frontend`, `senior-backend`, and `code-reviewer`, the `scripts/` and `references/` paths are relative to that skill's directory. Check the script's help and behavior before running it; some helpers create or modify files.
+
+For `dashboard-design`, the `references/` paths are relative to `.claude/skills/dashboard-design/`. Read `perception.md` for encoding and colour, `layout.md` for structure, `tokens.md` and `components.md` before building, `snippets.md` for web or `swiftui.md` for SwiftUI code, and `qa.md` before completion. The project's own design system and the user's stated taste take precedence over the skill's default house style.
 
 ## Agent Workflows
 
@@ -71,6 +74,7 @@ Common routes:
 - **Backend or data change:** `senior-backend` for implementation guidance; `backend-architect` and/or `database-architect` for design decisions. Neither architect definition is a backend implementation agent, so stop and ask the user to assign or define an implementation agent if the active part requires backend code.
 - **Bug:** `debugger` to reproduce and isolate; the relevant implementation skill for the fix; `code-reviewer` to check the regression risk.
 - **Mobile feature:** `mobile-design` first, then `ui-ux-pro-max` when design direction is open; use `frontend-developer` for React Native work or the appropriate platform specialist if one is later added.
+- **Dashboard or data-heavy screen:** `dashboard-design` first, with `ui-ux-pro-max` when visual direction is open; `senior-frontend` for implementation guidance; `frontend-developer` to implement; `ui-ux-designer` to review; `code-reviewer` for the final diff.
 - **Long or multi-part effort:** `context-manager` prepares the active-part brief and keeps the handoff concise; it does not replace the specialist who performs the work.
 
 `frontend-developer` normally asks `context-manager` for project context. When subagent messaging is unavailable, the coordinating thread must supply that context in the brief instead of pretending a request was sent.
